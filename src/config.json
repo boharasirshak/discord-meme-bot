@@ -1,0 +1,9 @@
+{
+  "reddit": {
+    "apiKey": "",
+    "hashId": ""
+  },
+  "discord": {
+    "botID": ""
+  }
+}
