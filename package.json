@@ -2,9 +2,8 @@
   "name": "discord-meme-bot",
   "version": "1.0.0",
   "description": "Bot based on discord js and reddit api for getting memes from various subreddits as per user command",
-  "main": "bot.js",
   "scripts": {
-    "test": "node bot.js"
+    "test": "cd bot && node bot.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +25,7 @@
   },
   "homepage": "https://github.com/sirshakbohara/discord-meme-bot#readme",
   "dependencies": {
-    "discord.js": "^13.6.0"
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0"
   }
 }
