@@ -1,6 +1,6 @@
 require('dotenv').config();
-const fs = require('fs');
 const snoowrap = require('snoowrap');
+const {DEFAULT_SUBREDDITS} = require('../data/constants');
 
 class Reddit {
     constructor(clientId, clientSecret, refreshToken) {
@@ -13,7 +13,8 @@ class Reddit {
     }
 
     getRandomMeme(){
-
+        var subreddit = DEFAULT_SUBREDDITS[Math.floor(Math.random() * DEFAULT_SUBREDDITS.length)];
+        return this.getMeme(subreddit);
     }
 
     getMeme(subreddit) {
@@ -44,9 +45,14 @@ class Reddit {
                         isEligible = false;
                     }
 
+                    if(submission.pinned){
+                        isEligible = false;
+                    }
+
                     if (isEligible){
                         memes.push({
                             is_success: true,
+                            subreddit: submission.subreddit_name_prefixed,
                             author: submission.author.name,
                             title: submission.title,
                             link: submission.url
@@ -60,6 +66,7 @@ class Reddit {
             .catch(err => {
                 return  {
                     is_success: false,
+                    subreddit: 'Unknown',
                     author: 'Unknown',
                     title: 'Unknown',
                     link: 'Unknown',
@@ -69,18 +76,4 @@ class Reddit {
     }
 }
 
-var reddit = new Reddit(
-    '17fxWx8ihoDnaXoYv1crhw',
-    'a-GCLOn6_YQoUS679m0yn3HXhm43-w',
-    '560010228648-yHKp8PprB2DPMyE1fthL_CVxSuwZ_w',
-
-    // process.env.REDDIT_CLIENT_ID,
-    // process.env.REDDIT_CLIENT_SECRET,
-    // process.env.REDDIT_REFRESH_TOKEN
-)
-
-
-reddit.getRandomMeme('danmemes')
-    .then(meme => {
-        console.log(meme);
-    })
+module.exports = Reddit
