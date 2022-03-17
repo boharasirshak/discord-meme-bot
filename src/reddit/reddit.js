@@ -20,6 +20,10 @@ class Reddit {
     getMeme(subreddit) {
         var memes = [];
 
+        if (subreddit.length === 0){
+            return undefined;
+        }
+
         return this.client.getSubreddit(subreddit).getHot({ limit: 10 },)
             .then((data) => {
                 data.forEach(submission => {
@@ -64,14 +68,7 @@ class Reddit {
                 return memes[Math.floor(Math.random() * memes.length)]
             })
             .catch(err => {
-                return  {
-                    is_success: false,
-                    subreddit: 'Unknown',
-                    author: 'Unknown',
-                    title: 'Unknown',
-                    link: 'Unknown',
-                    error_code: `Error getting meme from the subreddit '${reddit}'`
-                }
+                return undefined;
             })
     }
 }
