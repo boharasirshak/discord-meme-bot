@@ -36,8 +36,49 @@ client.on('messageCreate', message => {
         );
 
     }
-    else {
-        console.log("No Prefix");
-    }
 
 });
+
+
+const discord = require("discord.js");
+
+function sendMessage(
+    message,
+    title,
+    color,
+    description
+) {
+    let msg = new discord.MessageEmbed()
+        .setTitle(title)
+        .setColor(color)
+        .setDescription(description)
+        .setTimestamp();
+
+    message.channel.send({ embeds: [msg] });
+};
+
+function getCommands() {
+    return `1] !**meme** *Get random meme from famous subreddits* \n` +
+        `2] !**memz** *Get meme from the subreddit of the bot owner*`;
+}
+
+module.exports = {
+    sendMessage,
+    getCommands
+};
+
+require('dotenv').config()
+
+const botToken = process.env.DISCORD_BOT_TOKEN || undefined;
+const prefix = process.env.PREFIX || undefined;
+
+
+module.exports.isVaild = function () {
+    if (!botToken) return false;
+    if (!prefix) return false;
+
+    return true;
+}
+
+module.exports.botToken = botToken;
+module.exports.prefix = prefix;
