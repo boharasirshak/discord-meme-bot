@@ -20,7 +20,7 @@ class Reddit {
     getMeme(subreddit) {
         var memes = [];
 
-        if (subreddit.length === 0){
+        if (!subreddit){
             return undefined;
         }
 
