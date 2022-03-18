@@ -4,7 +4,8 @@
   "description": "Bot based on discord js and reddit api for getting memes from various subreddits as per user command",
   "main": "src/main.ts",
   "scripts": {
-    "test": "cd bot && node bot.js"
+    "dev": "nodemon src/main.js",
+    "start": "node src/main.js"
   },
   "repository": {
     "type": "git",
@@ -29,5 +30,8 @@
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
     "snoowrap": "^1.23.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
