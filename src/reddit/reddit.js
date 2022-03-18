@@ -20,56 +20,59 @@ class Reddit {
     getMeme(subreddit) {
         var memes = [];
 
-        if (!subreddit){
-            return undefined;
+        if (!subreddit || subreddit.length === 0){
+            return new Promise((resolve, reject) => {
+                resolve({
+                    is_success: false,
+                    error_code: 'Empty subreddit name was passed'
+                });
+            });
         }
 
-        return this.client.getSubreddit(subreddit).getHot({ limit: 10 },)
-            .then((data) => {
-                data.forEach(submission => {
-                    let isEligible = true;
+        return this.client.getSubreddit(subreddit).getHot({ limit: 10 })
+            .then(
+                (data) => {
+                    data.forEach(submission => {
+                        let isEligible = true;
 
-                    if (submission.over_18 && process.env.ALLOW_NSFW === 'true'){
-                        isEligible = false;
-                    }
+                        if (submission.over_18 && process.env.ALLOW_NSFW === 'true'){
+                            isEligible = false;
+                        }
 
-                    if (submission.spoiler && process.env.ALLOW_SPOILER === 'true'){
-                        isEligible = false;
-                    }
+                        // is any of the given condition is true
+                        // this will revert it and make the isEligible to false
+                        isEligible = !(
+                                (submission.over_18 && process.env.ALLOW_NSFW === 'true')
+                                || (submission.spoiler && process.env.ALLOW_SPOILER !== 'true')
+                                || submission.spam 
+                                || submission.is_video 
+                                || submission.url.length === 0 
+                                || submission.pinned 
+                                || submission.stickied
+                                || submission.spam
+                                );
 
-                    if (submission.spam){
-                        isEligible = false;
-                    }
+                        if (isEligible){
+                            memes.push({
+                                is_success: true,
+                                subreddit: submission.subreddit_name_prefixed,
+                                author: submission.author.name,
+                                title: submission.title,
+                                link: submission.url
+                            });
+                        }
+                        
+                    });
 
-                    if(submission.is_video){
-                        isEligible = false;
-                    }
-
-                    if (!submission.url.length){
-                        isEligible = false;
-                    }
-
-                    if(submission.pinned){
-                        isEligible = false;
-                    }
-
-                    if (isEligible){
-                        memes.push({
-                            is_success: true,
-                            subreddit: submission.subreddit_name_prefixed,
-                            author: submission.author.name,
-                            title: submission.title,
-                            link: submission.url
-                        });
-                    }
-                    
-                });
-
-                return memes[Math.floor(Math.random() * memes.length)]
-            })
-            .catch(err => {
-                return undefined;
-            })
+                    return memes[Math.floor(Math.random() * memes.length)];
+            },
+                (error) => {
+                    return {
+                        is_success: false,
+                        error_code: `Error getting posts from the subreddit : ${subreddit}`
+                    };
+                }
+        )
     }
 }
 
