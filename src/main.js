@@ -1,8 +1,7 @@
 require('dotenv').config()
 const { Client } = require('discord.js');
 const Reddit = require('./reddit/reddit');
-const { myCommands, formatMeme } = require('./discord/commands');
-const {sendMessage} = require('./discord/messages');
+const { myCommands, sendMeme } = require('./discord/commands');
 const client = new Client({ intents: ['GUILDS', 'GUILD_MESSAGES'] });
 
 client.login(process.env.DISCORD_BOT_TOKEN);
@@ -38,90 +37,14 @@ client.on('messageCreate', message => {
     }
 
     if (command === 'meme'){
-        var redditReponse = reddit.getRandomMeme();
-
-        if (!redditReponse) {
-            sendMessage(
-                message,
-                'Error',
-                '#FF0000',
-                `Error getting meme from the subreddit`
-            )
-        }
-
-        redditReponse.then(meme => {
-
-            if (!meme) {
-                sendMessage(
-                    message,
-                    'Error',
-                    '#FF0000',
-                    `Error getting meme from the subreddit`
-                )
-            }
-            else{
-                sendMessage(
-                    message,
-                    meme.title,
-                    '#FFA500',
-                    formatMeme(meme),
-                    meme.link
-                )
-            }
+        reddit.getRandomMeme().then(meme => {
+            sendMeme(meme, message);
         });
     }
 
     if (command === 'memez'){
-
-        if (args.length === 0){
-            sendMessage(
-                message,
-                'Error',
-                '#FF0000',
-                `Empty args!, please pass subreddit name after memez command`
-            )
-        }
-        else{
-            var redditReponse = reddit.getMeme(args[0]);
-
-            if (!redditReponse) {
-                sendMessage(
-                    message,
-                    'Error',
-                    '#FF0000',
-                    `Error getting meme from the subreddit`
-                )
-            }
-
-            redditReponse.then(meme => {
-                if (!meme) {
-                    sendMessage(
-                        message,
-                        'Error',
-                        '#FF0000',
-                        `Error getting meme from the subreddit ${args[0]}`
-                    )
-                }
-                else{
-                    sendMessage(
-                        message,
-                        meme.title,
-                        '#FFA500',
-                        formatMeme(meme),
-                        meme.link
-                    )
-                }
-            });
-        }
+        reddit.getMeme(args[0]).then(meme => {
+            sendMeme(meme, message);
+        });
     }
-
 });
-// reddit.getMeme('danmemes')
-//     .then(meme => {
-//         console.log(meme);
-//     })
-
-// reddit.getRandomMeme()
-//     .then(meme => {
-//         console.log(meme);
-//     })

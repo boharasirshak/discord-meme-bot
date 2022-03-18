@@ -19,7 +19,14 @@ function getMyCommands(){
     return cmds;
 }
 
-module.exports.myCommands = function myCommands(message){
+function formatMeme(meme){
+    var str = '';
+    str = str.concat(`Subreddit: ${meme.subreddit} \n`);
+    str = str.concat(`Author: ${meme.author} \n`);
+    return str;
+}
+
+module.exports.myCommands = function myCommands(message) {
     sendMessage(
         message,
         'Here are my all commands',
@@ -28,9 +35,22 @@ module.exports.myCommands = function myCommands(message){
     );
 }
 
-module.exports.formatMeme = function formatMeme(meme){
-    var str = '';
-    str = str.concat(`Subreddit: ${meme.subreddit} \n`);
-    str = str.concat(`Author: ${meme.author} \n`);
-    return str;
+module.exports.sendMeme = function sendMeme(meme, message){
+    if (!meme || !meme.is_success) {
+        sendMessage(
+            message,
+            'Error',
+            '#FF0000',
+            (meme) ? meme.error_code : `Cannot get meme from the subreddit`
+        );
+    }
+    else {
+        sendMessage(
+            message,
+            meme.title,
+            '#FFA500',
+            formatMeme(meme),
+            meme.link
+        );
+    }
 }
