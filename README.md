@@ -1,13 +1,11 @@
 # Discord Meme bot
 
 ---
-<br>
 
 ## Introduction
 
 A discord bot written in NodeJs using **discord.js** and **snoowrap** 
 
-<br>
 
 ## Installation
 
@@ -20,12 +18,9 @@ A discord bot written in NodeJs using **discord.js** and **snoowrap**
 * Open command line on the project directory and run 
 
 * `npm install` or `yarn install`
-
-<br>
+W
 
 #
-
-<br>
 
 ## Setup
 
@@ -33,11 +28,8 @@ A discord bot written in NodeJs using **discord.js** and **snoowrap**
 
 * Add respective values
 
-<br>
-
 #
 
-<br>
 
 ## Getting the reddit variables
 
@@ -72,11 +64,8 @@ A discord bot written in NodeJs using **discord.js** and **snoowrap**
 
 *  Return to the page, you will see **Refresh token** and **Access token** fields. Copy them.
 
-<br>
-
 #
 
-<br>
 
 ## Getting the discord variables
 
@@ -100,11 +89,7 @@ A discord bot written in NodeJs using **discord.js** and **snoowrap**
 
 * Now you can add the bot to any discord server
 
-<br>
-
 #
-
-<br>
 
 ## Bot commands
 
