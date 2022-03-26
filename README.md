@@ -47,6 +47,8 @@ A discord bot written in NodeJs using **discord.js** and **snoowrap**
 
 *  On the **redirect uri** add this `https://not-an-aardvark.github.io/reddit-oauth-helper/`.
 
+* Click on **create app** button.
+
 *  Under the **web app** you will get your *client id*.
 
 *  Get your *secret* token.
