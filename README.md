@@ -33,7 +33,7 @@ W
 
 ## Getting the reddit variables
 
-*  Create an account on reddit 
+*  Create an account on reddit if you don't have one.
 
 * Join some meme's subreddits [*Optional*].
 
