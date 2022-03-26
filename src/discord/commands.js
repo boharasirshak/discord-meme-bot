@@ -1,4 +1,6 @@
+require('dotenv').config()
 const { sendMessage } = require('./messages');
+const { DEFAULT_SUBREDDITS } = require('../data/constants');
 
 const MY_CURRENT_COMMANDS = [
     {
@@ -40,7 +42,7 @@ module.exports.sendMeme = function sendMeme(meme, message){
         sendMessage(
             message,
             'Error',
-            '#FF0000',
+            '#FFA500',
             (meme) ? meme.error_code : `Cannot get meme from the subreddit`
         );
     }
@@ -53,4 +55,17 @@ module.exports.sendMeme = function sendMeme(meme, message){
             meme.link
         );
     }
+}
+
+module.exports.getDefaultSubreddits = function getDefaultSubreddits(message){
+    let str = `Here are the subreddits what i will get meme when commanded ${process.env.PREFIX}**meme** \n`;
+    DEFAULT_SUBREDDITS.forEach(subreddit => {
+        str = str.concat(' ``r/' + subreddit + '`` \n');
+    });
+    sendMessage(
+        message,
+        'My default subreddits',
+        '#FFA500',
+        str
+    )
 }

@@ -1,7 +1,7 @@
 require('dotenv').config()
 const { Client } = require('discord.js');
 const Reddit = require('./reddit/reddit');
-const { myCommands, sendMeme } = require('./discord/commands');
+const { myCommands, sendMeme, getDefaultSubreddits } = require('./discord/commands');
 const client = new Client({ intents: ['GUILDS', 'GUILD_MESSAGES'] });
 
 client.login(process.env.DISCORD_BOT_TOKEN);
@@ -34,6 +34,10 @@ client.on('messageCreate', message => {
 
     if (command === 'cmds' || command === 'help'){
         myCommands(message)
+    }
+
+    if (command === 'default'){
+        getDefaultSubreddits(message);
     }
 
     if (command === 'meme'){
