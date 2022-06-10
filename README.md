@@ -17,7 +17,7 @@ A discord bot written in NodeJs using **discord.js** and **snoowrap**
 
 * Open command line on the project directory and run 
 
-* `npm install` or `yarn install`
+* `npm install`
 
 #
 
